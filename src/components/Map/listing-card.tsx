@@ -6,7 +6,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { appColors } from "../../styles";
 import { SharedElement } from "react-navigation-shared-element";
 import { useNavigation } from "@react-navigation/native";
-import { IIndexStack } from "../../navigators/stack-navigator.types";
 
 interface Props {
   listing?: IListing;
@@ -35,7 +34,6 @@ const ListingCard = (props: Props) => {
       from={{ bottom: BOTTOM - ITEM_HEIGHT }}
       animate={{ bottom: BOTTOM }}
       transition={{ type: "timing", duration: 250 }}
-      exit={{ bottom: BOTTOM - ITEM_HEIGHT }}
       style={styles.container}
     >
       <Pressable onPress={handlePress} style={styles.listing}>
@@ -43,10 +41,12 @@ const ListingCard = (props: Props) => {
           style={styles.imgContainer}
           id={`listing.${listing.id}.photo`}
         >
-          <Image style={styles.img} source={{ uri: listing.images[0].url }} />
-          <View style={styles.rating}>
-            <Text style={styles.ratingText}>4.5</Text>
-            <MaterialIcons name="star" color={appColors.orangeBrown} />
+          <View style={styles.imgContainer}>
+            <Image style={styles.img} source={{ uri: listing.images[0].url }} />
+            <View style={styles.rating}>
+              <Text style={styles.ratingText}>4.5</Text>
+              <MaterialIcons name="star" color={appColors.orangeBrown} />
+            </View>
           </View>
         </SharedElement>
         <View style={styles.infoContainer}>

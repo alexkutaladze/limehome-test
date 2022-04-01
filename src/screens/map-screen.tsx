@@ -20,6 +20,7 @@ const MapScreen = () => {
     latitudeDelta: 8.5,
     longitudeDelta: 8.5,
   });
+  const [regionCalculated, setRegionCalculated] = useState(false);
   const [selectedListing, setSelectedListing] = useState<IListing>();
   const mapRef = useRef<MapView>(null);
 
@@ -36,6 +37,7 @@ const MapScreen = () => {
       latitudeDelta: 0.0922,
       longitudeDelta: 0.0421,
     });
+    setRegionCalculated(true);
   };
 
   useEffect(() => {
@@ -45,10 +47,10 @@ const MapScreen = () => {
     );
   }, [listings.data]);
 
-  const handleRegionChange = (region: Region) => setRegion(region);
   const handleMarkerPress = (listing: IListing) => {
+    //@ts-ignore
     mapRef.current?.animateToRegion({
-      ...region,
+      ...mapRef.current.props.region,
       latitude: listing.location.lat,
       longitude: listing.location.lng,
     });
@@ -62,7 +64,7 @@ const MapScreen = () => {
 
   useEffect(calculateRegion, [listings.data]);
 
-  if (listings.isLoading) {
+  if (listings.isLoading || !regionCalculated) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <ActivityIndicator />
@@ -74,10 +76,10 @@ const MapScreen = () => {
     <View style={styles.container}>
       <MapView
         ref={mapRef}
-        region={region}
-        onRegionChangeComplete={handleRegionChange}
+        initialRegion={region}
         style={styles.container}
         clusterColor={appColors.black}
+        tracksViewChanges
       >
         {listings.data?.payload.map((listing) => (
           <Marker

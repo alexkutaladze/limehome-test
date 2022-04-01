@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import { appColors } from "../../styles";
@@ -11,37 +11,43 @@ interface Props {
   description: string;
 }
 
-const ListingTitleCard = (props: Props) => {
+const ListingBody = (props: Props) => {
   const { title, distance, description } = props;
   return (
-    <>
-      <View style={styles.generalContainer}>
-        <View>
-          <Text style={styles.title}>{title}</Text>
-          <View style={styles.distanceContainer}>
+    <View style={styles.body}>
+      <ScrollView>
+        <View style={styles.generalContainer}>
+          <View>
+            <Text style={styles.title}>{title}</Text>
+            <View style={styles.distanceContainer}>
+              <MaterialIcons
+                name="location-on"
+                color={appColors.orangeBrown}
+                size={20}
+              />
+              <Text style={styles.distance}>
+                {distance.toFixed(1)}km from city center
+              </Text>
+            </View>
+          </View>
+          <View style={styles.rating}>
+            <Text style={styles.ratingText}>4.5</Text>
             <MaterialIcons
-              name="location-on"
+              name="star"
               color={appColors.orangeBrown}
               size={20}
             />
-            <Text style={styles.distance}>
-              {distance.toFixed(1)}km from city center
-            </Text>
           </View>
         </View>
-        <View style={styles.rating}>
-          <Text style={styles.ratingText}>4.5</Text>
-          <MaterialIcons name="star" color={appColors.orangeBrown} size={20} />
-        </View>
-      </View>
-      <Text style={styles.description}>{description}</Text>
-      <Divider />
-      <RoomTypes />
-    </>
+        <Text style={styles.description}>{description}</Text>
+        <Divider />
+        <RoomTypes />
+      </ScrollView>
+    </View>
   );
 };
 
-export default ListingTitleCard;
+export default ListingBody;
 
 const styles = StyleSheet.create({
   distanceContainer: {
@@ -85,5 +91,9 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     fontWeight: "300",
     color: appColors.black,
+  },
+  body: {
+    flex: 3,
+    padding: 16,
   },
 });

@@ -1,12 +1,5 @@
-import {
-  StyleSheet,
-  Image,
-  View,
-  Pressable,
-  FlatList,
-  Dimensions,
-} from "react-native";
-import React from "react";
+import { StyleSheet, Image, View, Pressable, Dimensions } from "react-native";
+import React, { useEffect, useState } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import { appColors } from "../../styles";
 import { useNavigation } from "@react-navigation/native";
@@ -26,6 +19,13 @@ const { width } = Dimensions.get("screen");
 const ListingHeader = (props: Props) => {
   const { firstImage, images } = props;
 
+  const [flatlistImages, setFlatlistImages] = useState([firstImage]);
+
+  useEffect(() => {
+    if (!images) return;
+    setFlatlistImages([firstImage, ...images.slice(1)]);
+  }, [images]);
+
   const navigation = useNavigation();
   const scrollX = useSharedValue(0);
 
@@ -37,27 +37,23 @@ const ListingHeader = (props: Props) => {
 
   return (
     <View style={styles.container}>
-      {images ? (
-        <Animated.FlatList
-          style={{ flex: 1 }}
-          data={[firstImage, ...images.slice(1)]}
-          onScroll={scrollHandler}
-          horizontal
-          snapToInterval={width}
-          keyExtractor={(item) => item}
-          decelerationRate="fast"
-          showsHorizontalScrollIndicator={false}
-          renderItem={({ item, index }) => (
-            <Image
-              key={`${item}-${index}`}
-              style={styles.img}
-              source={{ uri: item }}
-            />
-          )}
-        />
-      ) : (
-        <Image style={styles.img} source={{ uri: firstImage }} />
-      )}
+      <Animated.FlatList
+        style={{ flex: 1 }}
+        data={flatlistImages}
+        onScroll={scrollHandler}
+        horizontal
+        snapToInterval={width}
+        keyExtractor={(item) => item}
+        decelerationRate="fast"
+        showsHorizontalScrollIndicator={false}
+        renderItem={({ item, index }) => (
+          <Image
+            key={`${item}-${index}`}
+            style={styles.img}
+            source={{ uri: item }}
+          />
+        )}
+      />
       <Pressable onPress={handlePressClose} style={styles.closeBtn}>
         <MaterialIcons name="close" size={20} color={appColors.black} />
       </Pressable>

@@ -9,8 +9,10 @@ const ListingFooter = () => {
       <View style={styles.container}>
         <Text>From $55.00/Night</Text>
         <Pressable style={styles.btn}>
-          <Text style={styles.btnText}>Explore</Text>
-          <MaterialIcons name="arrow-right-alt" color="white" size={20} />
+          <Text adjustsFontSizeToFit style={styles.btnText}>
+            Explore
+          </Text>
+          <MaterialIcons name="chevron-right" color="white" size={20} />
         </Pressable>
       </View>
     </SafeAreaView>
@@ -21,7 +23,7 @@ export default ListingFooter;
 
 const styles = StyleSheet.create({
   safeArea: {
-    flex: 0.2,
+    flex: 0.3,
     backgroundColor: appColors.greenPale,
   },
   container: {
@@ -38,14 +40,14 @@ const styles = StyleSheet.create({
     fontWeight: "300",
     textTransform: "uppercase",
     letterSpacing: 1,
+    paddingRight: 8,
   },
   btn: {
     backgroundColor: appColors.green,
     flexDirection: "row",
     alignItems: "center",
-
     paddingVertical: 4,
     paddingHorizontal: 8,
-    height: "100%",
+    height: "75%",
   },
 });

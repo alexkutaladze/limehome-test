@@ -18,7 +18,10 @@ const StackNavigator = () => {
           name="Listing"
           component={ListingScreen}
           options={{
-            cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
+            cardStyleInterpolator:
+              Platform.OS === "ios"
+                ? CardStyleInterpolators.forVerticalIOS
+                : CardStyleInterpolators.forRevealFromBottomAndroid,
             gestureDirection: "vertical",
           }}
           sharedElements={(route) => {

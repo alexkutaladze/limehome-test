@@ -1,5 +1,6 @@
-import StackNavigator from "./src/navigators/stack-navigator";
+import StackNavigator from "./src/navigators";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { StatusBar } from "expo-status-bar";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -12,6 +13,7 @@ const queryClient = new QueryClient({
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <StatusBar style="dark" />
       <StackNavigator />
     </QueryClientProvider>
   );

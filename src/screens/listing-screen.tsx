@@ -4,9 +4,11 @@ import { SharedElement } from "react-navigation-shared-element";
 import { IndexScreenProps } from "../navigators/stack-navigator.types";
 import { appColors } from "../styles";
 import { useSingleListing } from "../hooks/queries";
-import ListingTitleCard from "../components/Listing/listing-title-card";
-import ListingFooter from "../components/Listing/listing-footer";
-import ListingHeader from "../components/Listing/listing-header";
+import {
+  ListingFooter,
+  ListingHeader,
+  ListingTitleCard as ListingBody,
+} from "../components/Listing";
 
 const ListingScreen = (props: IndexScreenProps<"Listing">) => {
   const { route } = props;
@@ -24,13 +26,11 @@ const ListingScreen = (props: IndexScreenProps<"Listing">) => {
           firstImage={image}
         />
       </SharedElement>
-      <View style={styles.body}>
-        <ListingTitleCard
-          title={title}
-          description={listingDetails.data?.payload.description}
-          distance={distance}
-        />
-      </View>
+      <ListingBody
+        title={title}
+        description={listingDetails.data?.payload.description}
+        distance={distance}
+      />
       <ListingFooter />
     </View>
   );
@@ -47,10 +47,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  body: {
-    flex: 3,
-    padding: 16,
-  },
   footer: {
     flex: 0.5,
   },
