@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Image } from "react-native";
 import { useQuery } from "react-query";
 import { QUERY_KEYS } from "./queries.constants";
 import { IListingsResult } from "./queries.types";

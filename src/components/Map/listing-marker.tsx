@@ -1,5 +1,10 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
+import Animated, {
+  interpolateColor,
+  useAnimatedStyle,
+  withTiming,
+} from "react-native-reanimated";
 import { appColors } from "../../styles";
 
 interface Props {
@@ -8,11 +13,18 @@ interface Props {
 
 const ListingMarker = (props: Props) => {
   const { selected } = props;
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      borderRadius: selected ? withTiming(4) : withTiming(2),
+      backgroundColor: selected ? appColors.orangeBrown : appColors.black,
+      transform: [{ scale: selected ? withTiming(1.1) : withTiming(1) }],
+    };
+  }, [selected]);
   return (
     <>
-      <View style={[styles.container, selected && styles.selected]}>
+      <Animated.View style={[styles.container, animatedStyle]}>
         <Text style={styles.price}>$50</Text>
-      </View>
+      </Animated.View>
       <View style={[styles.triangle, selected && styles.triangleSelected]} />
     </>
   );
@@ -24,8 +36,6 @@ const styles = StyleSheet.create({
   container: {
     height: 30,
     width: 30,
-    backgroundColor: appColors.black,
-    borderRadius: 2,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -34,7 +44,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     lineHeight: 14,
   },
-  selected: { backgroundColor: appColors.orangeBrown },
   triangle: {
     width: 0,
     height: 0,

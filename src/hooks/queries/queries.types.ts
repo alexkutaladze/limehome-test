@@ -7,7 +7,7 @@ export interface IListingsResult {
 export interface ISingleListingResult {
   message: string;
   success: boolean;
-  payload: IListing;
+  payload: IListingDetails;
 }
 
 export interface IListing {
