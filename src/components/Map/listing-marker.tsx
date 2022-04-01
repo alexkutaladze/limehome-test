@@ -15,7 +15,7 @@ const ListingMarker = (props: Props) => {
   const { selected } = props;
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      borderRadius: selected ? withTiming(4) : withTiming(2),
+      borderRadius: selected ? withTiming(8) : withTiming(2),
       backgroundColor: selected ? appColors.orangeBrown : appColors.black,
       transform: [{ scale: selected ? withTiming(1.1) : withTiming(1) }],
     };
